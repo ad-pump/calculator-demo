@@ -2,6 +2,7 @@ package com.example.new_sample;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.pm.ApplicationInfo;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Adpumb.register(this,BuildConfig.DEBUG);
+        Adpumb.register(this,isDebug());
         setContentView(R.layout.activity_main);
         viewSetup();
 
@@ -339,6 +340,10 @@ public class MainActivity extends AppCompatActivity {
         b_para2 = findViewById(R.id.button_para2);
         t1 = findViewById(R.id.input);
         t2 = findViewById(R.id.output);
+    }
+
+    private boolean isDebug(){
+        return ( 0 != ( getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE ) );
     }
 
     private void operation() {
