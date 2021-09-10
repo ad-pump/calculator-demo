@@ -320,4 +320,14 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.051" />
 
+
+    <com.google.android.ads.nativetemplates.TemplateView
+        android:id="@+id/native_ad_template"
+        android:visibility="gone"
+        app:gnt_template_type="@layout/gnt_medium_template_view"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

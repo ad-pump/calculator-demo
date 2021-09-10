@@ -2,7 +2,11 @@ package com.example.new_sample;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.pm.ApplicationInfo;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
@@ -10,22 +14,29 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.adpumb.ads.analytics.AdPumbAnalyticsListener;
+import com.adpumb.ads.analytics.ImpressionData;
+import com.adpumb.ads.config.HttpAdConfigRepository;
 import com.adpumb.ads.display.AdCompletion;
 import com.adpumb.ads.display.DisplayManager;
 import com.adpumb.ads.display.InterstitialPlacement;
 import com.adpumb.ads.display.InterstitialPlacementBuilder;
 import com.adpumb.ads.display.LoaderSettings;
+import com.adpumb.ads.display.NativeAdListener;
+import com.adpumb.ads.display.NativePlacement;
+import com.adpumb.ads.display.NativePlacementBuilder;
+import com.adpumb.ads.display.RewardedPlacement;
+import com.adpumb.ads.display.RewardedPlacementBuilder;
 import com.adpumb.ads.error.PlacementDisplayStatus;
 import com.adpumb.lifecycle.Adpumb;
+import com.google.android.ads.nativetemplates.NativeTemplateStyle;
+import com.google.android.ads.nativetemplates.TemplateView;
+import com.google.android.gms.ads.nativead.MediaView;
+import com.google.android.gms.ads.nativead.NativeAd;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    private InterstitialPlacement addition = new InterstitialPlacementBuilder()
-            .name("addition")
-            .showLoaderTillAdIsReady(true)
-            .frequencyCapInSeconds(1)
-            .build();
     private Button b1;
     private Button b2;
     private Button b3;
@@ -58,11 +69,28 @@ public class MainActivity extends AppCompatActivity {
     private double val1 = Double.NaN;
     private double val2;
 
+    private Activity mActivity;
+
+    private AdPumbAnalyticsListener adPumbAnalyticsListener = new AdPumbAnalyticsListener() {
+        @Override
+        public void onEvent(ImpressionData impressionData) {
+            if (t2 != null){
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        t2.setText(impressionData.getPlacementName() + " shown");
+                    }
+                });
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Adpumb.register(this,isDebug());
+        Adpumb.register(this,false,adPumbAnalyticsListener, new HttpAdConfigRepository());
         setContentView(R.layout.activity_main);
+        mActivity = this;
         viewSetup();
 
         b1.setOnClickListener(new View.OnClickListener() {
@@ -184,7 +212,19 @@ public class MainActivity extends AppCompatActivity {
         b_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DisplayManager.getInstance().showAd(addition);
+
+                DisplayManager.getInstance().showAd(getRewardedPlacement("addition_rewarded_ad", mActivity, new AdCompletion() {
+                    @Override
+                    public void onAdCompletion(boolean success, PlacementDisplayStatus placementDisplayStatus) {
+                        if (success){
+                            Toast.makeText(mActivity, "You have successfully watched Rewarded Ad", Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(mActivity, "please watch Rewarded Ad - "+placementDisplayStatus.name(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }) );
+
+
                 if (t1.getText().length() > 0) {
                     ACTION = ADDITION;
                     operation();
@@ -203,6 +243,18 @@ public class MainActivity extends AppCompatActivity {
         b_sub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                DisplayManager.getInstance().showAd(getInterstitialWithCustomLoader("subtraction_interstitial_custom_loader", new AdCompletion() {
+                    @Override
+                    public void onAdCompletion(boolean success, PlacementDisplayStatus placementDisplayStatus) {
+                        if (success){
+                            Toast.makeText(mActivity, "You have successfully watched Interstial Ad", Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(mActivity, "please watch Ad - "+placementDisplayStatus.name(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }));
+
                 if (t1.getText().length() > 0) {
                     ACTION = SUBTRACTION;
                     operation();
@@ -223,7 +275,16 @@ public class MainActivity extends AppCompatActivity {
         b_multi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                adForMultiplicationWithCustomLoader();
+                DisplayManager.getInstance().showAd(getInterstitialPlacement("multiplication_interstitial_with_callback", new AdCompletion() {
+                    @Override
+                    public void onAdCompletion(boolean success, PlacementDisplayStatus placementDisplayStatus) {
+                        if (success){
+                            Toast.makeText(mActivity, "You have successfully watched Ad", Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(mActivity, "please watch Ad"+placementDisplayStatus.name(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }));
                 if (t1.getText().length() > 0) {
                     ACTION = MULTIPLICATION;
                     operation();
@@ -242,7 +303,7 @@ public class MainActivity extends AppCompatActivity {
         b_divide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                adForDivisionWithAdCompletionHandler();
+                DisplayManager.getInstance().showAd(getInterstitialPlacement("divide_simple_interstitial", null));
                 if (t1.getText().length() > 0) {
                     ACTION = DIVISION;
                     operation();
@@ -275,6 +336,9 @@ public class MainActivity extends AppCompatActivity {
         b_equal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                displayNativeAd("equals_native_ad");
+
                 if (t1.getText().length() > 0) {
                     operation();
                     ACTION = EQU;
@@ -293,6 +357,9 @@ public class MainActivity extends AppCompatActivity {
         b_clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                hideNativeAd();
+
                 if (t1.getText().length() > 0) {
                     CharSequence name = t1.getText().toString();
                     t1.setText(name.subSequence(0, name.length() - 1));
@@ -423,40 +490,87 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void adForDivisionWithAdCompletionHandler(){
-        InterstitialPlacement placement = new InterstitialPlacementBuilder()
-                .name("division")
-                .frequencyCapInSeconds(0)
-                .showLoaderTillAdIsReady(true)
-                .loaderTimeOutInSeconds(10000)
-                .onAdCompletion(new AdCompletion() {
-                    @Override
-                    public void onAdCompletion(boolean isSuccess, PlacementDisplayStatus status) {
-                        if(isSuccess){
-                            Toast.makeText(MainActivity.this, "Thank you for watch the ad", Toast.LENGTH_LONG).show();
-                        }else{
-                            Toast.makeText(MainActivity.this, "Why you didnt watch the ad?", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                }).build();
-        DisplayManager.getInstance().showAd(placement);
-    }
-    private void adForMultiplicationWithCustomLoader(){
+
+    private InterstitialPlacement getInterstitialWithCustomLoader(String placementName, AdCompletion adCompletion){
         LoaderSettings loaderSettings = new LoaderSettings();
         loaderSettings.setLogoResID(R.drawable.arithmatic_button);
         loaderSettings.setMessageStyle(R.color.colorAccent, R.color.colorPrimary);
 
-        InterstitialPlacement buttonPlacement = new InterstitialPlacementBuilder()
-                .name("multiplication")  // placement name is considered as id.
+        InterstitialPlacement customLoaderPlacement = new InterstitialPlacementBuilder()
+                .name(placementName)  // placement name is considered as id.
                 .loaderUISetting(loaderSettings)
                 .showLoaderTillAdIsReady(true) //this will show loader anima
-                .loaderTimeOutInSeconds(10000) //after time out, the loader will be hidden and onAdCompletion will get called.
+                .loaderTimeOutInSeconds(10) //after time out, the loader will be hidden and onAdCompletion will get called.
                 .frequencyCapInSeconds(10) // N calls within 10 seconds will endup showing only one ad for the placment with name 'multiplication'
+                .onAdCompletion(adCompletion)
                 .build();
-        DisplayManager.getInstance().showAd(buttonPlacement);
+
+        return customLoaderPlacement;
     }
 
+    private RewardedPlacement getRewardedPlacement(String placementName, Context mContext, AdCompletion adCompletion){
+        RewardedPlacement rewardedPlacement = new RewardedPlacementBuilder()
+                .name(placementName)
+                .loaderTimeOutInSeconds(5)
+                .onAdCompletion(adCompletion)
+                .build();
 
+        return rewardedPlacement;
+    }
+
+    private InterstitialPlacement getInterstitialPlacement(String placementName, AdCompletion adCompletion){
+        InterstitialPlacement addition = new InterstitialPlacementBuilder()
+                .name(placementName)
+                .showLoaderTillAdIsReady(true)
+                .loaderTimeOutInSeconds(10)
+                .frequencyCapInSeconds(5)
+                .onAdCompletion(adCompletion)
+                .build();
+
+        return addition;
+    }
+
+    private void displayNativeAd(String placementName){
+
+        NativePlacement nativePlacement = new NativePlacementBuilder()
+                .name(placementName)
+                .toBeShownOnActivity(this)
+                .refreshRateInSeconds(15)
+                .adListener(new NativeAdListener() {
+                    @Override
+                    public void onAdRecieved(NativeAd nativeAd, boolean b) {
+                        showNativeAd(nativeAd);
+                    }
+                })
+                .build();
+
+        DisplayManager.getInstance().showNativeAd(nativePlacement);
+
+    }
+
+    private void hideNativeAd(){
+        mActivity.findViewById(R.id.native_ad_template).setVisibility(View.INVISIBLE);
+    }
+
+    private void showNativeAd(NativeAd nativeAd){
+
+        mActivity.findViewById(R.id.native_ad_template).setVisibility(View.VISIBLE);
+
+        if (mActivity.isDestroyed() || mActivity.isFinishing()) {
+            //framework make sure this case never happen
+            //need to put crashlytics here to verify that claim
+            return;
+        }
+
+        NativeTemplateStyle styles = new
+                NativeTemplateStyle.Builder().withMainBackgroundColor(new ColorDrawable(Color.parseColor("#f3f3f6"))).build();
+
+        TemplateView template = mActivity.findViewById(R.id.native_ad_template);
+        template.setVisibility(View.VISIBLE);
+
+        template.setStyles(styles);
+        template.setNativeAd(nativeAd);
+    }
 
 
     // Make text small if too many digits.
