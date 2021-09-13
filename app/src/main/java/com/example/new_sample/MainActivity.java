@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -88,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Adpumb.register(this,false,adPumbAnalyticsListener, new HttpAdConfigRepository());
+        Adpumb.register(this,BuildConfig.DEBUG,adPumbAnalyticsListener, new HttpAdConfigRepository());
         setContentView(R.layout.activity_main);
         mActivity = this;
         viewSetup();
@@ -192,6 +193,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         b_para1.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
                 if (t1.getText().length() > 0) {
@@ -206,6 +208,8 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     t2.setText("Error");
                 }
+
+                showNativeAdsInRecycler();
             }
         });
 
@@ -572,6 +576,12 @@ public class MainActivity extends AppCompatActivity {
         template.setNativeAd(nativeAd);
     }
 
+
+    private void showNativeAdsInRecycler() {
+
+        Intent recyclerActivity = new Intent(mActivity, ListActivity.class);
+        mActivity.startActivity(recyclerActivity);
+    }
 
     // Make text small if too many digits.
     private void exceedLength() {
