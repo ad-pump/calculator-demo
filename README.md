@@ -14,7 +14,7 @@ repositories {
     }
 }
 dependencies {
-    implementation 'com.adpump:bidmachine:0.22' 
+    implementation 'com.adpump:bidmachine:0.36' 
     *********************
 
 ```
@@ -85,4 +85,20 @@ InterstitialPlacement placement = new InterstitialPlacementBuilder()
         DisplayManager.getInstance().showAd(buttonPlacement);
 ```
 
+7) Native Ad Implementation
+```
+NativePlacement nativePlacement = new NativePlacementBuilder()
+                .name("placement_name_here")
+                .toBeShownOnActivity(this)//Activity context
+                .refreshRateInSeconds(15) //native ad will refresh in 15 seconds
+                .adListener(new NativeAdListener() {
+                    @Override
+                    public void onAdRecieved(NativeAd nativeAd, boolean b) { //refreshed units will be returned here
+                        //show native ads to your layout
+                        //do something
+                    }
+                })
+                .build();
 
+        DisplayManager.getInstance().showNativeAd(nativePlacement);
+ ```
