@@ -20,21 +20,21 @@ public class ListActivity extends AppCompatActivity implements MyRecyclerViewAda
         setContentView(R.layout.activity_list);
 
         // data to populate the RecyclerView with
-        ArrayList<String> animalNames = new ArrayList<>();
-        animalNames.add("Horse");
-        animalNames.add("Cow");
-        animalNames.add("Camel");
-        animalNames.add("Sheep");
-        animalNames.add("Goat");
-        animalNames.add("patty");
-        animalNames.add("poocha");
-        animalNames.add("patty kunj");
-        animalNames.add("poocha kunj");
+        ArrayList<String> adList = new ArrayList<>();
+        adList.add("Ad 1");
+        adList.add("Ad 2");
+        adList.add("Ad 3");
+        adList.add("Ad 4");
+        adList.add("Ad 5");
+        adList.add("Ad 6");
+        adList.add("Ad 7");
+        adList.add("Ad 8");
+        adList.add("Ad 9");
 
         // set up the RecyclerView
         RecyclerView recyclerView = findViewById(R.id.rv_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new MyRecyclerViewAdapter(this, animalNames);
+        adapter = new MyRecyclerViewAdapter(this, adList);
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
     }
