@@ -3,27 +3,35 @@ package com.example.new_sample;
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.adpumb.ads.display.DisplayManager;
+import com.adpumb.ads.display.NativeAdListener;
 import com.adpumb.ads.display.NativePlacement;
 import com.adpumb.ads.display.NativePlacementBuilder;
 import com.google.android.ads.nativetemplates.NativeTemplateStyle;
 import com.google.android.ads.nativetemplates.TemplateView;
 import com.google.android.gms.ads.nativead.NativeAd;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<String> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
+
+    Map<Integer, NativeAdViewHolder> nativeAdsList = new HashMap<>();
+    int adLastUpdatedIndex = -1;
 
     static final int TYPE_CONTENT = 0;
     static final int TYPE_NATIVE_AD = 1;
@@ -35,6 +43,10 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         this.mInflater = LayoutInflater.from(activity);
         this.activity = activity;
         this.mData = prepareData(data);
+
+//        we have two active placements at a time
+        prepareNativeAdPlacements("placement_one");
+        prepareNativeAdPlacements("placement_two");
     }
 
     private List<String> prepareData(List<String> data) {
@@ -74,28 +86,64 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 ContentViewHolder contentViewHolder = (ContentViewHolder) holder;
                 contentViewHolder.myTextView.setText(animal);
                 break;
-            case TYPE_NATIVE_AD:
-                displayNativeAd(mData.get(position), (NativeAdViewHolder) holder);
-                break;
+//            case TYPE_NATIVE_AD:
+//                displayNativeAd(mData.get(position), (NativeAdViewHolder) holder);
+//                break;
         }
 
 
     }
 
-    private void displayNativeAd(String placementName, NativeAdViewHolder holder) {
+    @Override
+    public void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder holder) {
+        super.onViewAttachedToWindow(holder);
+
+        if (holder.getItemViewType() == TYPE_NATIVE_AD){
+            nativeAdsList.put(holder.getLayoutPosition(), (NativeAdViewHolder) holder);
+        }
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(@NonNull RecyclerView.ViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+        if (holder.getItemViewType() == TYPE_NATIVE_AD){
+            nativeAdsList.remove(holder.getLayoutPosition());
+        }
+    }
+
+    private void prepareNativeAdPlacements(String placementName) {
 
         NativePlacement nativePlacement = new NativePlacementBuilder()
                 .name(placementName)
                 .toBeShownOnActivity(activity)
-                .refreshRateInSeconds(15)
-                .adListener((nativeAd, b) -> showNativeAd(nativeAd, holder))
+                .refreshRateInSeconds(5)
+                .adListener((nativeAd, b) -> refreshNativeAd(nativeAd))
                 .build();
 
         DisplayManager.getInstance().showNativeAd(nativePlacement);
     }
 
-    private void showNativeAd(NativeAd nativeAd, NativeAdViewHolder holder){
+    private void refreshNativeAd(NativeAd nativeAd) {
 
+        if (nativeAdsList.size() == 1){
+            adLastUpdatedIndex = -1;
+        }
+
+        for(Map.Entry<Integer, NativeAdViewHolder> entry : nativeAdsList.entrySet()) {
+            int index = entry.getKey();
+
+            if (index != adLastUpdatedIndex){
+                showNativeAd(nativeAd, entry.getValue());
+                adLastUpdatedIndex = index;
+                Log.d("ad_shown", " : "+index);
+                return;
+            }
+
+
+        }
+    }
+
+    private void showNativeAd(NativeAd nativeAd, NativeAdViewHolder holder){
 
         if (activity.isDestroyed() || activity.isFinishing()) {
             //framework make sure this case never happen
@@ -170,4 +218,5 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public interface ItemClickListener {
         void onItemClick(View view, int position);
     }
+
 }
