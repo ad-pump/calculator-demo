@@ -3,21 +3,28 @@ package com.example.new_sample;
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.adpumb.ads.display.DisplayManager;
+import com.adpumb.ads.display.NativeAdListener;
 import com.adpumb.ads.display.NativePlacement;
 import com.adpumb.ads.display.NativePlacementBuilder;
+import com.adpumb.lifecycle.Adpumb;
+import com.facebook.ads.Ad;
 import com.google.android.ads.nativetemplates.NativeTemplateStyle;
 import com.google.android.ads.nativetemplates.TemplateView;
 import com.google.android.gms.ads.nativead.NativeAd;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -74,21 +81,46 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 ContentViewHolder contentViewHolder = (ContentViewHolder) holder;
                 contentViewHolder.myTextView.setText(animal);
                 break;
-            case TYPE_NATIVE_AD:
-                displayNativeAd(mData.get(position), (NativeAdViewHolder) holder);
-                break;
+//            case TYPE_NATIVE_AD:
+//                displayNativeAd(mData.get(position), (NativeAdViewHolder) holder);
+//                break;
         }
 
 
     }
+
+    @Override
+    public void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder holder) {
+        super.onViewAttachedToWindow(holder);
+
+        if (holder.getItemViewType() == TYPE_NATIVE_AD){
+            displayNativeAd(mData.get(holder.getLayoutPosition()), (NativeAdViewHolder) holder);
+        }
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(@NonNull RecyclerView.ViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+        if (holder.getItemViewType() == TYPE_NATIVE_AD){
+            DisplayManager.getInstance().disposeNativePlacement(mData.get(holder.getLayoutPosition()));
+        }
+    }
+
+
 
     private void displayNativeAd(String placementName, NativeAdViewHolder holder) {
 
         NativePlacement nativePlacement = new NativePlacementBuilder()
                 .name(placementName)
                 .toBeShownOnActivity(activity)
-                .refreshRateInSeconds(15)
-                .adListener((nativeAd, b) -> showNativeAd(nativeAd, holder))
+                .refreshRateInSeconds(5)
+                .adListener(new NativeAdListener() {
+                    @Override
+                    public void onAdRecieved(NativeAd nativeAd, boolean b) {
+                        Log.d(Adpumb.TAG, "refreshing placement - "+placementName);
+                        MyRecyclerViewAdapter.this.showNativeAd(nativeAd, holder);
+                    }
+                })
                 .build();
 
         DisplayManager.getInstance().showNativeAd(nativePlacement);
