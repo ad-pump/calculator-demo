@@ -1,7 +1,5 @@
 package com.example.new_sample;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +12,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.multidex.BuildConfig;
 
 import com.adpumb.ads.analytics.AdPumbAnalyticsListener;
 import com.adpumb.ads.analytics.ImpressionData;
@@ -32,7 +33,6 @@ import com.adpumb.ads.error.PlacementDisplayStatus;
 import com.adpumb.lifecycle.Adpumb;
 import com.google.android.ads.nativetemplates.NativeTemplateStyle;
 import com.google.android.ads.nativetemplates.TemplateView;
-import com.google.android.gms.ads.nativead.MediaView;
 import com.google.android.gms.ads.nativead.NativeAd;
 
 
@@ -85,11 +85,12 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
+    private NativePlacement nativePlacementOnConsole;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Adpumb.register(this,BuildConfig.DEBUG,adPumbAnalyticsListener, new HttpAdConfigRepository());
+        Adpumb.register(this, true,adPumbAnalyticsListener, new HttpAdConfigRepository());
         setContentView(R.layout.activity_main);
         mActivity = this;
         viewSetup();
@@ -548,12 +549,15 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .build();
 
+        nativePlacementOnConsole = nativePlacement;
+
         DisplayManager.getInstance().showNativeAd(nativePlacement);
 
     }
 
     private void hideNativeAd(){
         mActivity.findViewById(R.id.native_ad_template).setVisibility(View.INVISIBLE);
+        DisplayManager.getInstance().disposeNativePlacement(nativePlacementOnConsole);
     }
 
     private void showNativeAd(NativeAd nativeAd){

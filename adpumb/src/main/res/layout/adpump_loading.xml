@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:padding="20dp">
+
+    <com.github.ybq.android.spinkit.SpinKitView
+        android:id="@+id/av_connection"
+        style="@style/SpinKitView.Large.DoubleBounce"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        app:SpinKit_Color="@color/gnt_white" />
+
+    <ImageView
+        android:id="@+id/img_logo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/ic_logo" />
+
+
+
+        <com.adpumb.ads.display.MagicTextView
+            android:id="@+id/tv_loader_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/gnt_red"
+            android:layout_margin="10dp"
+            android:text="Loading"
+            app:strokeColor="@color/gnt_white"
+            app:strokeJoinStyle="round"
+            app:strokeWidth=".5dp"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="30dp"/>
+
+
+
+</RelativeLayout>
