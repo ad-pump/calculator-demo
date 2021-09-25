@@ -42,14 +42,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     MyRecyclerViewAdapter(Activity activity, List<String> data) {
         this.mInflater = LayoutInflater.from(activity);
         this.activity = activity;
-        this.mData = prepareData(data);
-    }
-
-    private List<String> prepareData(List<String> data) {
-        for (int index = 0; index < data.size() / 3; index++) {
-            data.add(index*3, "native_ad_"+index);
-        }
-        return data;
+        this.mData = data;
     }
 
     // inflates the row layout from xml when needed
@@ -82,9 +75,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 ContentViewHolder contentViewHolder = (ContentViewHolder) holder;
                 contentViewHolder.myTextView.setText(animal);
                 break;
-//            case TYPE_NATIVE_AD:
-//                displayNativeAd(mData.get(position), (NativeAdViewHolder) holder);
-//                break;
+
         }
 
 
