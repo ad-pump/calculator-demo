@@ -23,7 +23,7 @@ uploadArchives {
                 authentication(userName: "admin", password: "admin123")
                 pom.groupId = "com.adpumb"
                 pom.artifactId = "bidmachine"
-                pom.version = '0.41'
+                pom.version = '0.42'
             }
         }
     }
