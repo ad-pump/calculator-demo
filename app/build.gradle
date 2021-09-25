@@ -1,6 +1,9 @@
 apply plugin: 'com.android.application'
 
 repositories {
+    maven {
+        url 'https://maven.adpumb.com/nexus/content/repositories/adpumb'
+    }
 }
 android {
     compileSdkVersion 30
@@ -39,6 +42,6 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    implementation project(':adpumb')
     implementation 'com.google.android.gms:play-services-ads:20.4.0'
+    implementation 'com.adpumb:bidmachine:0.42'
 }
