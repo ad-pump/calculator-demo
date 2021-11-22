@@ -14,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.multidex.BuildConfig;
 
 import com.adpumb.ads.analytics.AdPumbAnalyticsListener;
 import com.adpumb.ads.analytics.ImpressionData;
@@ -90,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Adpumb.register(this, BuildConfig.DEBUG,adPumbAnalyticsListener, new HttpAdConfigRepository());
+        Adpumb.register(this, true,adPumbAnalyticsListener, new HttpAdConfigRepository());
         setContentView(R.layout.activity_main);
         mActivity = this;
         viewSetup();

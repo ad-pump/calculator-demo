@@ -3,6 +3,7 @@ package com.example.new_sample;
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,10 +22,10 @@ import com.google.android.ads.nativetemplates.NativeTemplateStyle;
 import com.google.android.ads.nativetemplates.TemplateView;
 import com.google.android.gms.ads.nativead.NativeAd;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -35,21 +36,16 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     static final int TYPE_CONTENT = 0;
     static final int TYPE_NATIVE_AD = 1;
 
+    Map<Integer, NativeHolderRegistry> nativeHolderRegistryMap = new HashMap<>();
+    ArrayList<NativePlacement> nativePlacements = new ArrayList<>();
+
     Activity activity;
-    Map<String, NativePlacement> nativePlacements = new HashMap<>();
 
     // data is passed into the constructor
     MyRecyclerViewAdapter(Activity activity, List<String> data) {
         this.mInflater = LayoutInflater.from(activity);
         this.activity = activity;
-        this.mData = prepareData(data);
-    }
-
-    private List<String> prepareData(List<String> data) {
-        for (int index = 0; index < data.size() / 3; index++) {
-            data.add(index*3, "native_ad_"+index);
-        }
-        return data;
+        this.mData = data;
     }
 
     // inflates the row layout from xml when needed
@@ -82,9 +78,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 ContentViewHolder contentViewHolder = (ContentViewHolder) holder;
                 contentViewHolder.myTextView.setText(animal);
                 break;
-//            case TYPE_NATIVE_AD:
-//                displayNativeAd(mData.get(position), (NativeAdViewHolder) holder);
-//                break;
+
         }
 
 
@@ -95,7 +89,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         super.onViewAttachedToWindow(holder);
 
         if (holder.getItemViewType() == TYPE_NATIVE_AD){
-            displayNativeAd(mData.get(holder.getLayoutPosition()), (NativeAdViewHolder) holder);
+            registerNativeHolder((NativeAdViewHolder) holder);
         }
     }
 
@@ -103,16 +97,43 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public void onViewDetachedFromWindow(@NonNull RecyclerView.ViewHolder holder) {
         super.onViewDetachedFromWindow(holder);
         if (holder.getItemViewType() == TYPE_NATIVE_AD){
-            DisplayManager.getInstance().disposeNativePlacement(nativePlacements.get(mData.get(holder.getLayoutPosition())));
-            nativePlacements.remove(mData.get(holder.getLayoutPosition()));
-            Log.d(Adpumb.TAG, "disposed native placement = "+mData.get(holder.getLayoutPosition()));
+            unRegisterNativeHolder((NativeAdViewHolder) holder);
         }
     }
 
+    private void unRegisterNativeHolder(NativeAdViewHolder holder) {
+        nativeHolderRegistryMap.remove(holder.getLayoutPosition());
+
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                adjustNativePlacements();
+            }
+        }, 3000); //wait 2 seconds to avoid fast disposal request
 
 
-    private void displayNativeAd(String placementName, NativeAdViewHolder holder) {
+    }
 
+    private void registerNativeHolder(NativeAdViewHolder holder) {
+        nativeHolderRegistryMap.put(holder.getLayoutPosition(), new NativeHolderRegistry(holder, 0));
+        adjustNativePlacements();
+    }
+
+    private void adjustNativePlacements() {
+        int requiredPlacementCount = nativeHolderRegistryMap.size() - nativePlacements.size();
+        for (int count = 0; count < requiredPlacementCount; count++) {
+            nativePlacements.add(createNativePlacement("placement - "+nativePlacements.size()));
+        }
+
+        int abundantPlacementCount = nativePlacements.size() - nativeHolderRegistryMap.size();
+        for (int i = 0; i < abundantPlacementCount; i++) {
+            DisplayManager.getInstance().disposeNativePlacement(nativePlacements.get(nativePlacements.size()-1));
+            nativePlacements.remove(nativePlacements.get(nativePlacements.size()-1));
+        }
+    }
+
+    private NativePlacement createNativePlacement(String placementName) {
         NativePlacement nativePlacement = new NativePlacementBuilder()
                 .name(placementName)
                 .toBeShownOnActivity(activity)
@@ -121,16 +142,17 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     @Override
                     public void onAdRecieved(NativeAd nativeAd, boolean b) {
                         Log.d(Adpumb.TAG, "refreshing placement - "+placementName);
-                        MyRecyclerViewAdapter.this.showNativeAd(nativeAd, holder);
+                        MyRecyclerViewAdapter.this.refreshNativeAd(nativeAd);
                     }
                 })
                 .build();
 
         DisplayManager.getInstance().showNativeAd(nativePlacement);
-        nativePlacements.put(placementName, nativePlacement);
+
+        return nativePlacement;
     }
 
-    private void showNativeAd(NativeAd nativeAd, NativeAdViewHolder holder){
+    private void refreshNativeAd(NativeAd nativeAd){
 
 
         if (activity.isDestroyed() || activity.isFinishing()) {
@@ -142,11 +164,41 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         NativeTemplateStyle styles = new
                 NativeTemplateStyle.Builder().withMainBackgroundColor(new ColorDrawable(Color.parseColor("#f3f3f6"))).build();
 
-        holder.nativeTemplate.setVisibility(View.VISIBLE);
+        NativeAdViewHolder holder = null;
+        try {
+            System.out.println("adpumb next holder key = "+getNextHolderKey());
+            NativeHolderRegistry nativeHolderRegistry = nativeHolderRegistryMap.get(getNextHolderKey());
+            holder = nativeHolderRegistry.getNativeAdViewHolder();
+            holder.nativeTemplate.setVisibility(View.VISIBLE);
 
-        holder.nativeTemplate.setStyles(styles);
-        holder.nativeTemplate.setNativeAd(nativeAd);
+            holder.nativeTemplate.setStyles(styles);
+            holder.nativeTemplate.setNativeAd(nativeAd);
+
+            nativeHolderRegistry.setLastRefreshedOn(System.currentTimeMillis());
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
     }
+
+    private int getNextHolderKey() throws Exception{
+
+        long lowestUpdateTime = System.currentTimeMillis();
+        int nextHolderKey = -1;
+
+        for (Map.Entry<Integer, NativeHolderRegistry> entry : nativeHolderRegistryMap.entrySet()) {
+            if (entry.getValue().lastRefreshedOn < lowestUpdateTime){
+                lowestUpdateTime = entry.getValue().lastRefreshedOn;
+                nextHolderKey = entry.getKey();
+            }
+        }
+
+        if (nextHolderKey == -1){
+            throw new IllegalStateException();
+        }
+
+        return nextHolderKey;
+    }
+
 
     // total number of rows
     @Override
