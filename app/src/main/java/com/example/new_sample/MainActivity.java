@@ -89,7 +89,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Adpumb.register(this, true,adPumbAnalyticsListener, new HttpAdConfigRepository());
+//  Set/Change AdConfig Repository - *Optional
+//        Adpumb.setAdConfigRepository(this, new HttpAdConfigRepository());
+
+//  Set External Analytics Listener for getting Event Logs from Adpumb to your Application - *Optional
+        Adpumb.setExternalAnalytics(adPumbAnalyticsListener);
+
+
         setContentView(R.layout.activity_main);
         mActivity = this;
         viewSetup();
