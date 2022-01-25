@@ -102,7 +102,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public void onViewDetachedFromWindow(@NonNull RecyclerView.ViewHolder holder) {
         super.onViewDetachedFromWindow(holder);
         if (holder.getItemViewType() == TYPE_NATIVE_AD){
-            DisplayManager.getInstance().disposeNativePlacement(mData.get(holder.getLayoutPosition()));
+           //DisplayManager.getInstance().disposeNativePlacement(mData.get(holder.getLayoutPosition()));
         }
     }
 

@@ -72,24 +72,9 @@ public class MainActivity extends AppCompatActivity {
 
     private Activity mActivity;
 
-    private AdPumbAnalyticsListener adPumbAnalyticsListener = new AdPumbAnalyticsListener() {
-        @Override
-        public void onEvent(ImpressionData impressionData) {
-            if (t2 != null){
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        t2.setText(impressionData.getPlacementName() + " shown");
-                    }
-                });
-            }
-        }
-    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Adpumb.register(this,BuildConfig.DEBUG,adPumbAnalyticsListener, new HttpAdConfigRepository());
         setContentView(R.layout.activity_main);
         mActivity = this;
         viewSetup();
