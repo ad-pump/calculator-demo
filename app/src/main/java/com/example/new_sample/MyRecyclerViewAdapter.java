@@ -17,13 +17,13 @@ import com.adpumb.ads.display.NativeAdListener;
 import com.adpumb.ads.display.NativePlacement;
 import com.adpumb.ads.display.NativePlacementBuilder;
 import com.adpumb.lifecycle.Adpumb;
-import com.facebook.ads.Ad;
 import com.google.android.ads.nativetemplates.NativeTemplateStyle;
 import com.google.android.ads.nativetemplates.TemplateView;
 import com.google.android.gms.ads.nativead.NativeAd;
 
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -36,6 +36,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     static final int TYPE_NATIVE_AD = 1;
 
     Activity activity;
+    Map<String, NativePlacement> nativePlacements = new HashMap<>();
 
     // data is passed into the constructor
     MyRecyclerViewAdapter(Activity activity, List<String> data) {
@@ -102,7 +103,9 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public void onViewDetachedFromWindow(@NonNull RecyclerView.ViewHolder holder) {
         super.onViewDetachedFromWindow(holder);
         if (holder.getItemViewType() == TYPE_NATIVE_AD){
-           //DisplayManager.getInstance().disposeNativePlacement(mData.get(holder.getLayoutPosition()));
+            DisplayManager.getInstance().disposeNativePlacement(nativePlacements.get(mData.get(holder.getLayoutPosition())));
+            nativePlacements.remove(mData.get(holder.getLayoutPosition()));
+            Log.d(Adpumb.TAG, "disposed native placement = "+mData.get(holder.getLayoutPosition()));
         }
     }
 
@@ -124,6 +127,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 .build();
 
         DisplayManager.getInstance().showNativeAd(nativePlacement);
+        nativePlacements.put(placementName, nativePlacement);
     }
 
     private void showNativeAd(NativeAd nativeAd, NativeAdViewHolder holder){
