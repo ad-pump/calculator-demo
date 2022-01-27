@@ -10,11 +10,11 @@ Please add the following to you build.gradle file of your app
 ```gradle
 repositories {
     maven {
-        url 'https://maven.adpumb.com/nexus/content/repositories/adpumb'
+        url 'https://maven.adpumb.com/repository/adpumb/'
     }
 }
 dependencies {
-    implementation 'com.adpump:bidmachine:0.60' 
+    implementation 'com.adpumb:bidmachine:0.60' 
     *********************
 
 ```
