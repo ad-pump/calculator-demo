@@ -14,11 +14,24 @@ repositories {
     }
 }
 dependencies {
-    implementation 'com.adpumb:bidmachine:0.60' 
+    implementation 'com.adpumb:bidmachine:1.3.1' 
     *********************
 
 ```
-3) Adpump will initialize automatically as the application launches. You do not need to register/init manually.
+3)  Adding config key to AndroidManifest
+    On AndroidManifest.xml add meta data with name 'com.adpumb.config.key' values given by us.
+```
+   <meta-data 
+   android:name="com.adpumb.config.key" 
+   android:value="adpumb,AIzaSyBdR63r0eiZi6_wvGNlToNnVfVCm7sffwk,1:476641212837:android:440c356d4a9858bcda904c" />
+    
+```
+
+
+Adpump will initialize automatically as the application launches. You do not need to register/init manually.
+
+
+
 
 4) Create Interstitial placement: Adpump is designed on the concept of placement rather than adunit. A placement is a predefined action sequence which ends up in showing an Ad. Consider the example of a calculator, where a user presses the addition (+) button and an ad is shown. Here we can consider the addition button click as a placement.
 ```java
@@ -115,14 +128,6 @@ NativePlacement nativePlacement = new NativePlacementBuilder()
                 })
                 .build();
 
-        DisplayManager.getInstance().showNativeAd(nativePlacement);
+        DisplayManager.getInstance().showNativeAd(nativePlacement,activity);
  ```
-
-9) Adding test device ids to test Ads
-
-   On AndroidManifest.xml add meta data with name 'test.device.ids' values as test device ids.
-
-```
-   <meta-data android:name="test.device.ids" android:value="57397519E8393FACBE46511BDAE8C5E1,A54A9AF036EB13F566CD067CC8048884"></meta-data>
-```
 

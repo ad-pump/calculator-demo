@@ -16,7 +16,6 @@ import com.adpumb.ads.display.DisplayManager;
 import com.adpumb.ads.display.NativeAdListener;
 import com.adpumb.ads.display.NativePlacement;
 import com.adpumb.ads.display.NativePlacementBuilder;
-import com.adpumb.lifecycle.Adpumb;
 import com.google.android.ads.nativetemplates.NativeTemplateStyle;
 import com.google.android.ads.nativetemplates.TemplateView;
 import com.google.android.gms.ads.nativead.NativeAd;
@@ -24,7 +23,6 @@ import com.google.android.gms.ads.nativead.NativeAd;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -105,7 +103,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (holder.getItemViewType() == TYPE_NATIVE_AD){
             DisplayManager.getInstance().disposeNativePlacement(nativePlacements.get(mData.get(holder.getLayoutPosition())));
             nativePlacements.remove(mData.get(holder.getLayoutPosition()));
-            Log.d(Adpumb.TAG, "disposed native placement = "+mData.get(holder.getLayoutPosition()));
+            Log.d("Adpumb", "disposed native placement = "+mData.get(holder.getLayoutPosition()));
         }
     }
 
@@ -120,13 +118,13 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 .adListener(new NativeAdListener() {
                     @Override
                     public void onAdRecieved(NativeAd nativeAd, boolean b) {
-                        Log.d(Adpumb.TAG, "refreshing placement - "+placementName);
+                        Log.d("Adpumb", "refreshing placement - "+placementName);
                         MyRecyclerViewAdapter.this.showNativeAd(nativeAd, holder);
                     }
                 })
                 .build();
 
-        DisplayManager.getInstance().showNativeAd(nativePlacement);
+        DisplayManager.getInstance().showNativeAd(nativePlacement,activity);
         nativePlacements.put(placementName, nativePlacement);
     }
 

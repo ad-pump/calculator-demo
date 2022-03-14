@@ -1,7 +1,5 @@
 package com.example.new_sample;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -15,9 +13,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.adpumb.ads.analytics.AdPumbAnalyticsListener;
-import com.adpumb.ads.analytics.ImpressionData;
-import com.adpumb.ads.config.HttpAdConfigRepository;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.adpumb.ads.display.AdCompletion;
 import com.adpumb.ads.display.DisplayManager;
 import com.adpumb.ads.display.InterstitialPlacement;
@@ -29,7 +26,6 @@ import com.adpumb.ads.display.NativePlacementBuilder;
 import com.adpumb.ads.display.RewardedPlacement;
 import com.adpumb.ads.display.RewardedPlacementBuilder;
 import com.adpumb.ads.error.PlacementDisplayStatus;
-import com.adpumb.lifecycle.Adpumb;
 import com.google.android.ads.nativetemplates.NativeTemplateStyle;
 import com.google.android.ads.nativetemplates.TemplateView;
 import com.google.android.gms.ads.nativead.MediaView;
@@ -533,7 +529,7 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .build();
 
-        DisplayManager.getInstance().showNativeAd(nativePlacement);
+        DisplayManager.getInstance().showNativeAd(nativePlacement,this);
 
     }
 
