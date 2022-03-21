@@ -16,8 +16,8 @@ import com.adpumb.ads.display.DisplayManager;
 import com.adpumb.ads.display.NativeAdListener;
 import com.adpumb.ads.display.NativePlacement;
 import com.adpumb.ads.display.NativePlacementBuilder;
-import com.google.android.ads.nativetemplates.NativeTemplateStyle;
-import com.google.android.ads.nativetemplates.TemplateView;
+import com.adpumb.ads.nativetemplates.NativeTemplateStyle;
+import com.adpumb.ads.nativetemplates.TemplateView;
 import com.google.android.gms.ads.nativead.NativeAd;
 
 import java.util.HashMap;
