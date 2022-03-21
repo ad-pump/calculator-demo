@@ -26,9 +26,8 @@ import com.adpumb.ads.display.NativePlacementBuilder;
 import com.adpumb.ads.display.RewardedPlacement;
 import com.adpumb.ads.display.RewardedPlacementBuilder;
 import com.adpumb.ads.error.PlacementDisplayStatus;
-import com.google.android.ads.nativetemplates.NativeTemplateStyle;
-import com.google.android.ads.nativetemplates.TemplateView;
-import com.google.android.gms.ads.nativead.MediaView;
+import com.adpumb.ads.nativetemplates.NativeTemplateStyle;
+import com.adpumb.ads.nativetemplates.TemplateView;
 import com.google.android.gms.ads.nativead.NativeAd;
 
 
