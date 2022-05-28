@@ -21,16 +21,9 @@ public class ListActivity extends AppCompatActivity implements MyRecyclerViewAda
 
         // data to populate the RecyclerView with
         ArrayList<String> adList = new ArrayList<>();
-        adList.add("Ad 1");
-        adList.add("Ad 2");
-        adList.add("Ad 3");
-        adList.add("Ad 4");
-        adList.add("Ad 5");
-        adList.add("Ad 6");
-        adList.add("Ad 7");
-        adList.add("Ad 8");
-        adList.add("Ad 9");
-
+        for(int i=1;i<25;i++) {
+            adList.add("Ad - "+i);
+        }
         // set up the RecyclerView
         RecyclerView recyclerView = findViewById(R.id.rv_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
