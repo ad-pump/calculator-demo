@@ -20,7 +20,10 @@ allprojects {
     repositories {
         google()
         jcenter()
-        
+        maven {url "https://maven.adpumb.com/sdk/"}
+        maven {
+            url 'https://maven.adpumb.com/repository/adpumb'
+        }
     }
 }
 
