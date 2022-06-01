@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.adpumb.ads.analytics.AdPumbAnalyticsListener;
+import com.adpumb.ads.analytics.ImpressionData;
 import com.adpumb.ads.display.AdCompletion;
 import com.adpumb.ads.display.DisplayManager;
 import com.adpumb.ads.display.InterstitialPlacement;
@@ -28,6 +30,7 @@ import com.adpumb.ads.display.RewardedPlacementBuilder;
 import com.adpumb.ads.error.PlacementDisplayStatus;
 import com.adpumb.ads.nativetemplates.NativeTemplateStyle;
 import com.adpumb.ads.nativetemplates.TemplateView;
+import com.adpumb.lifecycle.AdPumbConfiguration;
 import com.google.android.gms.ads.nativead.NativeAd;
 
 
@@ -67,9 +70,24 @@ public class MainActivity extends AppCompatActivity {
 
     private Activity mActivity;
 
+    private AdPumbAnalyticsListener adPumbAnalyticsListener = new AdPumbAnalyticsListener() {
+        @Override
+        public void onEvent(ImpressionData impressionData) {
+            if (t2 != null){
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        t2.setText(impressionData.getPlacementName() + " shown");
+                    }
+                });
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AdPumbConfiguration.getInstance().setExternalAnalytics(adPumbAnalyticsListener);
         setContentView(R.layout.activity_main);
         mActivity = this;
         viewSetup();
