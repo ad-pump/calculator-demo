@@ -14,7 +14,7 @@ repositories {
     }
 }
 dependencies {
-    implementation 'com.adpumb:bidmachine:1.3.7' 
+    implementation 'com.adpumb:bidmachine:1.7.7' 
     *********************
 
 ```
@@ -23,7 +23,7 @@ dependencies {
 ```
    <meta-data 
    android:name="com.adpumb.config.key" 
-   android:value="adpumb,AIzaSyBdR63r0eiZi6_wvGNlToNnVfVCm7sffwk,1:476641212837:android:440c356d4a9858bcda904c" />
+   android:value="adpumb,AIzaSyBdR63r0eiZi6_wvGNlToNnVfVCm7sffwk,1:476641212837:android:440c356d4a8598bcda904c" />
     
 ```
 
@@ -93,9 +93,9 @@ private void onAdditionButtonClick() {
                             Toast.makeText(mActivity, "please watch Rewarded Ad - "+placementDisplayStatus.name(), Toast.LENGTH_SHORT).show();
                         }
                     }
-                }) );)
+                })
                 .build();
-   DisplayManager.getInstance().showAd(addition);
+   DisplayManager.getInstance().showAd(rewardedPlacement);
 }            
 ```
 

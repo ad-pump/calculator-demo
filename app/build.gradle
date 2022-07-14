@@ -33,7 +33,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.adpumb:bidmachine:1.6.3'
+    implementation 'com.adpumb:bidmachine:1.7.7'
     implementation ('com.google.android.gms:play-services-ads:20.6.0'){
         exclude group: 'androidx.work', module :'work-runtime'
     }
