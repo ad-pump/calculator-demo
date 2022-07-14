@@ -14,7 +14,7 @@ repositories {
     }
 }
 dependencies {
-    implementation 'com.adpumb:bidmachine:1.3.7' 
+    implementation 'com.adpumb:bidmachine:1.7.2' 
     *********************
 
 ```
@@ -93,9 +93,9 @@ private void onAdditionButtonClick() {
                             Toast.makeText(mActivity, "please watch Rewarded Ad - "+placementDisplayStatus.name(), Toast.LENGTH_SHORT).show();
                         }
                     }
-                }) );)
+                })
                 .build();
-   DisplayManager.getInstance().showAd(addition);
+   DisplayManager.getInstance().showAd(rewardedPlacement);
 }            
 ```
 
