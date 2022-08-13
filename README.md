@@ -14,7 +14,7 @@ repositories {
     }
 }
 dependencies {
-    implementation 'com.adpumb:bidmachine:1.7.2' 
+    implementation 'com.adpumb:bidmachine:1.7.6' 
     *********************
 
 ```
@@ -23,7 +23,7 @@ dependencies {
 ```
    <meta-data 
    android:name="com.adpumb.config.key" 
-   android:value="adpumb,AIzaSyBdR63r0eiZi6_wvGNlToNnVfVCm7sffwk,1:476641212837:android:440c356d4a9858bcda904c" />
+   android:value="adpumb,AIzaSyBdR63r0eiZi6_wvGNlToNnVfVCm7sffwk,1:476641212837:android:440c356d4a8598bcda904c" />
     
 ```
 
