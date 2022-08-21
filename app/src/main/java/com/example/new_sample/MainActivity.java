@@ -18,6 +18,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.adpumb.ads.analytics.AdPumbAnalyticsListener;
 import com.adpumb.ads.analytics.ImpressionData;
 import com.adpumb.ads.display.AdCompletion;
+import com.adpumb.ads.display.BannerPlacement;
+import com.adpumb.ads.display.BannerPlacementBuilder;
 import com.adpumb.ads.display.DisplayManager;
 import com.adpumb.ads.display.InterstitialPlacement;
 import com.adpumb.ads.display.InterstitialPlacementBuilder;
@@ -85,6 +87,18 @@ public class MainActivity extends AppCompatActivity {
     };
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        BannerPlacement banner = new BannerPlacementBuilder()
+                .name("first_banner")
+                .activity(this)
+                .size(BannerPlacementBuilder.ANCHORED)
+                .refreshRateInSeconds(10)
+                .build();
+        DisplayManager.getInstance().showBannerAd(banner,findViewById(R.id.bannerContainer));
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AdPumbConfiguration.getInstance().setExternalAnalytics(adPumbAnalyticsListener);
@@ -95,9 +109,7 @@ public class MainActivity extends AppCompatActivity {
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ifErrorOnOutput();
-                exceedLength();
-                t1.setText(t1.getText().toString() + "1");
+                MainActivity.this.startActivity(new Intent(MainActivity.this,ScrollActivity.class));
             }
         });
 
