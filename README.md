@@ -37,7 +37,7 @@ dependencies {
 
 
 ### Interstial
-4) Create Interstitial placement: Adpump is designed on the concept of placement rather than adunit. A placement is a predefined action sequence which ends up in showing an Ad. Consider the example of a calculator, where a user presses the addition (+) button and an ad is shown. Here we can consider the addition button click as a placement.
+Create Interstitial placement: Adpump is designed on the concept of placement rather than adunit. A placement is a predefined action sequence which ends up in showing an Ad. Consider the example of a calculator, where a user presses the addition (+) button and an ad is shown. Here we can consider the addition button click as a placement.
 ```java
 private void onAdditionButtonClick() {
    InterstitialPlacement addition = new InterstitialPlacementBuilder()
@@ -52,8 +52,8 @@ private void onAdditionButtonClick() {
 
 In this example if the user presses the addition button before the ad is loaded/received from the server, then a loader will be shown. If the ad is not ready within 5 seconds then the loader will be removed. However if the ad is already loaded or it got loaded while the loader is shown, then ad loader will be hidden and ad will be shown to user.
 For a particular placement you need to create only one placement object, which can be used to show multiple ads.
-For example:
 
+>For example:
 ```java
 private static InterstitialPlacement addition = new InterstitialPlacementBuilder()
             .name("addition").build();
@@ -62,7 +62,9 @@ public void onResume(){
   DisplayManager.getInstance().showAd(addition);
 }
 ```
-5) Callbacks: You can register callbacks to the placement
+
+>Callbacks: You can register callbacks to the placement
+
 ```java
 InterstitialPlacement placement = new InterstitialPlacementBuilder()
                 .name("division")
@@ -82,8 +84,23 @@ InterstitialPlacement placement = new InterstitialPlacementBuilder()
         DisplayManager.getInstance().showAd(placement);
 ```
 
+Customising loader animation: You can customize the loader using the loader settings for each placement
+```java
+        LoaderSettings loaderSettings = new LoaderSettings();
+        loaderSettings.setLogoResID(R.drawable.arithmatic_button);
+        loaderSettings.setMessageStyle(R.color.colorAccent, R.color.colorPrimary);
+        //there are more options in loader settings which you can try
+        InterstitialPlacement buttonPlacement = new InterstitialPlacementBuilder()
+                .name("multiplication")  
+                .loaderUISetting(loaderSettings)
+                .showLoaderTillAdIsReady(true) //this will show loader anima
+                .build();
+        DisplayManager.getInstance().showAd(buttonPlacement);
+```
+
+
 ### Reward
-6) Rewarded Placement Implementation:
+Rewarded Placement Implementation:
 ```java
 private void onAdditionButtonClick() {
    RewardedPlacement rewardedPlacement = new RewardedPlacementBuilder()
@@ -104,7 +121,7 @@ private void onAdditionButtonClick() {
 }            
 ```
 
-7) Customising loader animation: You can customize the loader using the loader settings for each placement
+Customising loader animation: You can customize the loader using the loader settings for each placement
 ```java
         LoaderSettings loaderSettings = new LoaderSettings();
         loaderSettings.setLogoResID(R.drawable.arithmatic_button);
@@ -117,8 +134,8 @@ private void onAdditionButtonClick() {
                 .build();
         DisplayManager.getInstance().showAd(buttonPlacement);
 ```
-
-8) Native Ad Implementation
+### Native
+Native Ad Implementation
 ```
 NativePlacement nativePlacement = new NativePlacementBuilder()
                 .name("placement_name_here")
@@ -135,5 +152,5 @@ NativePlacement nativePlacement = new NativePlacementBuilder()
 
         DisplayManager.getInstance().showNativeAd(nativePlacement,activity);
  ```
-### Native
+
 ### Banner
