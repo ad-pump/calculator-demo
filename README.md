@@ -97,7 +97,10 @@ Customising loader animation: You can customize the loader using the loader sett
                 .build();
         DisplayManager.getInstance().showAd(buttonPlacement);
 ```
-![This is an image](https://github.com/ad-pump/calculator-demo/blob/nlshad-patch-2/Interstial-ad-demo.png)
+
+<p align="center">
+  <img src="https://github.com/ad-pump/calculator-demo/blob/nlshad-patch-2/Interstial-ad-demo.png">
+</p>
 
 ### Reward
 Rewarded Placement Implementation:
@@ -223,8 +226,9 @@ First step is to add BannerView on your layout
             }
         });
 ```
-![This is an image](https://github.com/ad-pump/calculator-demo/blob/nlshad-patch-2/Smart-banner.png)
-
+<p align="center">
+  <img src="https://github.com/ad-pump/calculator-demo/blob/nlshad-patch-2/Smart-banner.png">
+</p>
 
 #### Inline Banner
 As the name implies, inline banners are shown generally between the content. Unlike a smart banner, Inline banner has dynamic heights, meaning different ads of Inline can be of different heights. This help Inline to grow or shrink based on the ad content. 
@@ -242,8 +246,9 @@ It is also possible to set the max height of Inline banner. However it should be
     </application>
 </manifest>
 ```
-![This is an image](https://github.com/ad-pump/calculator-demo/blob/nlshad-patch-2/Inline-banner.png)
-
+<p align="center">
+  <img src="https://github.com/ad-pump/calculator-demo/blob/nlshad-patch-2/Inline-banner.png">
+</p>
 
 ```java
 BannerPlacement bannerOne = new BannerPlacementBuilder().activity(this)
