@@ -159,7 +159,7 @@ NativePlacement nativePlacement = new NativePlacementBuilder()
 
 ### Banner
 Adpumb support banner ads of various types and handle the load and refresh. Since there are multiple type, its mandatory to mention the types you are going to use on the app in the manifest. It helps adpumb to cache the given type before you actually calls to show the ad.
-If its not defined, then system assumes you are going to use the default type, ie SMART BANNER
+If its not defined, then system assumes you are going to use the default type, ie ANCHORED .
 You can define multiple types on the manifesto, but adding more types will end up in slow loading. So its better to limit it 1 or 2.
 
 
@@ -181,8 +181,6 @@ In the above example two type of banners INLINE and ANCHORED are defined.
 - LARGE_BANNER
 - MEDIUM_RECTANGLE
 - WIDE_SKYSCRAPER
-- FLUID
-- SEARCH
 
 #### Anchored Banner
 Typical use case of anchored banner is to show ad wisget on top or bottom of the screen. 
