@@ -225,7 +225,21 @@ First step is to add BannerView on your layout
 
 #### Inline Banner
 As the name implies, inline banners are shown generally between the content. Unlike a smart banner, Inline banner has dynamic heights, meaning different ads of Inline can be of different heights. This help Inline to grow or shrink based on the ad content. 
-It is also possible to set the mex height of Inline banner. However it should be set upfront.
+It is also possible to set the max height of Inline banner. However it should be set upfront on the manifest.
+```xml
+        <meta-data
+            android:name="com.adpumb.config.banner.types"
+            android:value="INLINE" />
+        <meta-data
+            android:name="com.adpumb.config.key"
+            android:value="adpumb-test,AIzaSyAx4dxazFButNiZU4_rXT8hgaJNSREfmrw,1:693299279464:android:07e16d50af2a5719e6addd" />
+        <meta-data
+            android:name="com.adpumb.config.banner.inline.maxHeight"
+            android:value="400" />
+    </application>
+</manifest>
+```
+
 ```java
 BannerPlacement bannerOne = new BannerPlacementBuilder().activity(this)
                 .size(BannerPlacementBuilder.INLINE)
@@ -235,3 +249,4 @@ BannerPlacement bannerOne = new BannerPlacementBuilder().activity(this)
 BannerView container1 = findViewById(R.id.bannerContainer1);
 DisplayManager.getInstance().showBannerAd(bannerOne,container1);
 ```
+
