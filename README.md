@@ -155,3 +155,14 @@ NativePlacement nativePlacement = new NativePlacementBuilder()
  ```
 
 ### Banner
+Default Adtype supported by Adpumb is smart banner. Smart banners can dynamically size itself, however on the downsize it doesn't always look good on the screen.
+#### Smart Banner
+```java
+BannerPlacement banner = new BannerPlacementBuilder()
+                .name("first_banner")
+                .activity(this)
+                //.size(BannerPlacementBuilder.ANCHORED)
+                .refreshRateInSeconds(10)
+                .build();
+        DisplayManager.getInstance().showBannerAd(banner,findViewById(R.id.bannerContainer));
+```
