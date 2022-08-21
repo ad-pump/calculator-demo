@@ -159,6 +159,7 @@ Adpumb support banner ads of various types and handle the load and refresh. Sinc
 If its not defined, then system assumes you are going to use the default type, ie SMART BANNER
 You can define multiple types on the manifesto, but adding more types will end up in slow loading. So its better to keep it at 1 or 1.
 
+
 Define the banner type in android-manifest. 
 ```xml
         <meta-data
@@ -244,9 +245,16 @@ It is also possible to set the max height of Inline banner. However it should be
 BannerPlacement bannerOne = new BannerPlacementBuilder().activity(this)
                 .size(BannerPlacementBuilder.INLINE)
                 .name("banner_one")
-                .refreshRateInSeconds(5)
+                .refreshRateInSeconds(10)
                 .build();
 BannerView container1 = findViewById(R.id.bannerContainer1);
 DisplayManager.getInstance().showBannerAd(bannerOne,container1);
 ```
 
+#### Other banner types
+There is no additional steps required to other banner types. You can try them by adding it on the manifest and setting it as size on the banner placement.
+#### Ideal Refresh rate
+There is no ideal refresh rate, however we recommend you using 15 seconds. You can alos try diffrent values by keeping the refresh rate as a Firebase remote config parameter and check which ones are giving you better yeild. Setting a very lower values such as 5 seconds might end up in low ecpm.
+
+
+** Please make sure you use different placement name for the placement created for different BannerView **
