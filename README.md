@@ -14,7 +14,7 @@ repositories {
     }
 }
 dependencies {
-    implementation 'com.adpumb:bidmachine:1.7.7' 
+    implementation 'com.adpumb:bidmachine:1.9.2' 
     *********************
 
 ```
@@ -176,8 +176,6 @@ Define the banner type in android-manifest.
 In the above example two type of banners INLINE and ANCHORED are defined.
 
 #### Supported BannerType
-- SMART_BANNER
-- BANNER
 - ANCHORED
 - INLINE
 - LARGE_BANNER
@@ -186,8 +184,8 @@ In the above example two type of banners INLINE and ANCHORED are defined.
 - FLUID
 - SEARCH
 
-#### Smart Banner
-Typical use case of smart banner is to show ad wisget on top or bottom of the screen. 
+#### Anchored Banner
+Typical use case of anchored banner is to show ad wisget on top or bottom of the screen. 
 First step is to add BannerView on your layout
 ```xml
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -211,8 +209,8 @@ First step is to add BannerView on your layout
  BannerPlacement banner = new BannerPlacementBuilder()
                 .name("first_banner")
                 .activity(this)
-                .size(BannerPlacementBuilder.SMART_BANNER)
-                .refreshRateInSeconds(10)
+                .size(BannerPlacementBuilder.ANCHORED)
+                .refreshRateInSeconds(15)
                 .build();
         DisplayManager.getInstance().showBannerAd(banner, findViewById(R.id.bannerContainer), new BannerEvent() {
             @Override
@@ -254,7 +252,7 @@ It is also possible to set the max height of Inline banner. However it should be
 BannerPlacement bannerOne = new BannerPlacementBuilder().activity(this)
                 .size(BannerPlacementBuilder.INLINE)
                 .name("banner_one")
-                .refreshRateInSeconds(10)
+                .refreshRateInSeconds(15)
                 .build();
 BannerView container1 = findViewById(R.id.bannerContainer1);
 DisplayManager.getInstance().showBannerAd(bannerOne,container1);
@@ -266,4 +264,4 @@ There is no additional steps required to other banner types. You can try them by
 There is no ideal refresh rate, however we recommend you using 15 seconds. You can alos try diffrent values by keeping the refresh rate as a Firebase remote config parameter and check which ones are giving you better yeild. Setting a very lower values such as 5 seconds might end up in low ecpm.
 
 
-** Please make sure you use different placement name for the placement created for different BannerView **
+**  Please make sure you use different placement name for the placement created for different BannerView  **
