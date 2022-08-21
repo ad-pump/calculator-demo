@@ -121,7 +121,8 @@ private void onAdditionButtonClick() {
 }            
 ```
 
-Customising loader animation: You can customize the loader using the loader settings for each placement
+Customising loader animation:
+>You can customize the loader using the loader settings for each placement
 ```java
         LoaderSettings loaderSettings = new LoaderSettings();
         loaderSettings.setLogoResID(R.drawable.arithmatic_button);
@@ -136,7 +137,7 @@ Customising loader animation: You can customize the loader using the loader sett
 ```
 ### Native
 Native Ad Implementation
-```
+```java
 NativePlacement nativePlacement = new NativePlacementBuilder()
                 .name("placement_name_here")
                 .toBeShownOnActivity(this)//Activity context
