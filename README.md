@@ -160,7 +160,7 @@ NativePlacement nativePlacement = new NativePlacementBuilder()
 ### Banner
 Adpumb support banner ads of various types and handle the load and refresh. Since there are multiple type, its mandatory to mention the types you are going to use on the app in the manifest. It helps adpumb to cache the given type before you actually calls to show the ad.
 If its not defined, then system assumes you are going to use the default type, ie SMART BANNER
-You can define multiple types on the manifesto, but adding more types will end up in slow loading. So its better to keep it at 1 or 1.
+You can define multiple types on the manifesto, but adding more types will end up in slow loading. So its better to limit it 1 or 2.
 
 
 Define the banner type in android-manifest. 
@@ -268,4 +268,4 @@ There is no additional steps required to other banner types. You can try them by
 There is no ideal refresh rate, however we recommend you using 15 seconds. You can alos try diffrent values by keeping the refresh rate as a Firebase remote config parameter and check which ones are giving you better yeild. Setting a very lower values such as 5 seconds might end up in low ecpm.
 
 
-**Please make sure you use different placement name for the placement created for different BannerView**
+PS:**Please make sure you use different placement name for the placement created for different BannerView**
