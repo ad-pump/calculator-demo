@@ -97,7 +97,7 @@ Customising loader animation: You can customize the loader using the loader sett
                 .build();
         DisplayManager.getInstance().showAd(buttonPlacement);
 ```
-
+![This is an image](https://github.com/ad-pump/calculator-demo/blob/nlshad-patch-2/Interstial.png)
 
 ### Reward
 Rewarded Placement Implementation:
