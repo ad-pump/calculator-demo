@@ -27,11 +27,14 @@ dependencies {
     
 ```
 
-
 Adpump will initialize automatically as the application launches. You do not need to register/init manually.
 
 
-
+## Type of ads supported by Adpumb
+`1.Interstial`
+`2.Reward`
+`3.Native`
+`4.Banner`
 
 4) Create Interstitial placement: Adpump is designed on the concept of placement rather than adunit. A placement is a predefined action sequence which ends up in showing an Ad. Consider the example of a calculator, where a user presses the addition (+) button and an ad is shown. Here we can consider the addition button click as a placement.
 ```java
