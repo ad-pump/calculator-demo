@@ -26,13 +26,16 @@ dependencies {
    android:value="adpumb,AIzaSyBdR63r0eiZi6_wvGNlToNnVfVCm7sffwk,1:476641212837:android:440c356d4a8598bcda904c" />
     
 ```
+> Adpump will initialize automatically as the application launches. You do not need to register/init manually.
+
+## Type of ads supported by Adpumb
+**`1.Interstial`**
+**`2.Reward`**
+**`3.Native`**
+**`4.Banner`**
 
 
-Adpump will initialize automatically as the application launches. You do not need to register/init manually.
-
-
-
-
+### Interstial
 4) Create Interstitial placement: Adpump is designed on the concept of placement rather than adunit. A placement is a predefined action sequence which ends up in showing an Ad. Consider the example of a calculator, where a user presses the addition (+) button and an ad is shown. Here we can consider the addition button click as a placement.
 ```java
 private void onAdditionButtonClick() {
@@ -78,6 +81,7 @@ InterstitialPlacement placement = new InterstitialPlacementBuilder()
         DisplayManager.getInstance().showAd(placement);
 ```
 
+### Reward
 6) Rewarded Placement Implementation:
 ```java
 private void onAdditionButtonClick() {
