@@ -1,4 +1,19 @@
 <resources>
     <string name="app_name">new_sample</string>
     <string name="facebook_app_id">1135577820113294</string>
+    <string name="longstring">Part I provided a general overview of the web design environment. Now that we’ve covered the big concepts, it’s time to roll up our sleeves and start creating a real web page. It will be an extremely simple page, but even the most complicated pages are based on the principles described here.
+
+In this chapter, we’ll create a web page step by step so you can get a feel for what it’s like to mark up a document with HTML tags. The exercises allow you to work along.
+
+This is what I want you to get out of this chapter:
+
+Get a feel for how markup works, including an understanding of elements and attributes.
+
+See how browsers interpret HTML documents.
+
+Learn the basic structure of an HTML document.
+
+Get a first glimpse of a style sheet in action.
+
+Don’t worry about learning the specific text elements or style sheet rules at this point; we’ll get to those in the following chapters. For now, just pay attention to the process, the overall structure of the document, and the new terminology.</string>
 </resources>

@@ -14,7 +14,7 @@ android {
     defaultConfig {
         applicationId 'com.secure.cryptovpn'
         multiDexEnabled true
-        minSdkVersion 17
+        minSdkVersion 19
         targetSdkVersion 32
         versionCode 12
         versionName "1.2"
@@ -33,7 +33,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.adpumb:bidmachine:1.7.7'
+    implementation 'com.adpumb:bidmachine:1.9.1'
     implementation ('com.google.android.gms:play-services-ads:20.6.0'){
         exclude group: 'androidx.work', module :'work-runtime'
     }
