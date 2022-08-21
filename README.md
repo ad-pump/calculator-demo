@@ -29,10 +29,11 @@ dependencies {
 > Adpump will initialize automatically as the application launches. You do not need to register/init manually.
 
 ## Type of ads supported by Adpumb
-**`1.Interstial`**
-**`2.Reward`**
-**`3.Native`**
-**`4.Banner`**
+[1.Interstial](#interstial) </br>
+[2.Reward](#reward) </br>
+[3.Native](#native) </br>
+[4.Banner](#banner)
+
 
 
 ### Interstial
@@ -134,4 +135,5 @@ NativePlacement nativePlacement = new NativePlacementBuilder()
 
         DisplayManager.getInstance().showNativeAd(nativePlacement,activity);
  ```
-
+### Native
+### Banner
