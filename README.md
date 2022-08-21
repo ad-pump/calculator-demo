@@ -225,7 +225,7 @@ First step is to add BannerView on your layout
         });
 ```
 <p align="center">
-  <img src="https://github.com/ad-pump/calculator-demo/blob/nlshad-patch-2/Smart-banner.png">
+  <img src="https://github.com/ad-pump/calculator-demo/blob/nlshad-patch-2/anchored.png">
 </p>
 
 #### Inline Banner
@@ -260,6 +260,10 @@ DisplayManager.getInstance().showBannerAd(bannerOne,container1);
 
 #### Other banner types
 There is no additional steps required to other banner types. You can try them by adding it on the manifest and setting it as size on the banner placement.
+<p align="center">
+  <img src="https://github.com/ad-pump/calculator-demo/blob/nlshad-patch-2/others.png">
+</p>
+
 #### Ideal Refresh rate
 There is no ideal refresh rate, however we recommend you using 15 seconds. You can alos try diffrent values by keeping the refresh rate as a Firebase remote config parameter and check which ones are giving you better yeild. Setting a very lower values such as 5 seconds might end up in low ecpm.
 
