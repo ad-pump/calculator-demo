@@ -155,14 +155,83 @@ NativePlacement nativePlacement = new NativePlacementBuilder()
  ```
 
 ### Banner
-Default Adtype supported by Adpumb is smart banner. Smart banners can dynamically size itself, however on the downsize it doesn't always look good on the screen.
+Adpumb support banner ads of various types and handle the load and refresh. Since there are multiple type, its mandatory to mention the types you are going to use on the app in the manifest. It helps adpumb to cache the given type before you actually calls to show the ad.
+If its not defined, then system assumes you are going to use the default type, ie SMART BANNER
+You can define multiple types on the manifesto, but adding more types will end up in slow loading. So its better to keep it at 1 or 1.
+
+Define the banner type in android-manifest. 
+```xml
+        <meta-data
+            android:name="com.adpumb.config.banner.types"
+            android:value="INLINE,ANCHORED" />
+        <meta-data
+            android:name="com.adpumb.config.key"
+            android:value="adpumb-test,AIzaSyAx4dxazFButNiZU4_rXT8hgaJNSREfmrw,1:693299279464:android:07e16d50af2a5719e6addd" />
+    </application>
+```
+In the above example two type of banners INLINE and ANCHORED are defined.
+
+#### Supported BannerType
+- SMART_BANNER
+- BANNER
+- ANCHORED
+- INLINE
+- LARGE_BANNER
+- MEDIUM_RECTANGLE
+- WIDE_SKYSCRAPER
+- FLUID
+- SEARCH
+
 #### Smart Banner
+Typical use case of smart banner is to show ad wisget on top or bottom of the screen. 
+First step is to add BannerView on your layout
+```xml
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000"
+    tools:context=".MainActivity">
+<!--    <Whatever goes here-->
+    <com.adpumb.ads.banner.BannerView
+        android:id="@+id/bannerContainer"
+        android:layout_width="match_parent"
+        android:gravity="center|top"
+        android:layout_height="match_parent">
+    </com.adpumb.ads.banner.BannerView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+```
 ```java
-BannerPlacement banner = new BannerPlacementBuilder()
+ BannerPlacement banner = new BannerPlacementBuilder()
                 .name("first_banner")
                 .activity(this)
-                //.size(BannerPlacementBuilder.ANCHORED)
+                .size(BannerPlacementBuilder.SMART_BANNER)
                 .refreshRateInSeconds(10)
                 .build();
-        DisplayManager.getInstance().showBannerAd(banner,findViewById(R.id.bannerContainer));
+        DisplayManager.getInstance().showBannerAd(banner, findViewById(R.id.bannerContainer), new BannerEvent() {
+            @Override
+            public void onImpressionLogged(BannerPlacement bannerPlacement) {
+                //this will be called within few seconds a banner is shown to user
+            }
+
+            @Override
+            public void onAdRefreshed(BannerPlacement bannerPlacement) {
+                //this will be called after 10 seconds(given refresh rate) the onImpression is called
+            }
+        });
+```
+
+#### Inline Banner
+As the name implies, inline banners are shown generally between the content. Unlike a smart banner, Inline banner has dynamic heights, meaning different ads of Inline can be of different heights. This help Inline to grow or shrink based on the ad content. 
+It is also possible to set the mex height of Inline banner. However it should be set upfront.
+```java
+BannerPlacement bannerOne = new BannerPlacementBuilder().activity(this)
+                .size(BannerPlacementBuilder.INLINE)
+                .name("banner_one")
+                .refreshRateInSeconds(5)
+                .build();
+BannerView container1 = findViewById(R.id.bannerContainer1);
+DisplayManager.getInstance().showBannerAd(bannerOne,container1);
 ```
