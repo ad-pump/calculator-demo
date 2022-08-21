@@ -264,4 +264,4 @@ There is no additional steps required to other banner types. You can try them by
 There is no ideal refresh rate, however we recommend you using 15 seconds. You can alos try diffrent values by keeping the refresh rate as a Firebase remote config parameter and check which ones are giving you better yeild. Setting a very lower values such as 5 seconds might end up in low ecpm.
 
 
-**  Please make sure you use different placement name for the placement created for different BannerView  **
+**Please make sure you use different placement name for the placement created for different BannerView**
