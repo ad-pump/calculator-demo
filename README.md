@@ -1,5 +1,5 @@
-# AdPumb Android integration guide
-## Prerequisite ##
+# AdPumb Android Integration Guide
+## Prerequisites ##
 You need to register with us before starting the integration. You can drop a mail to sales@adpumb.com
 ## Steps ##
 
