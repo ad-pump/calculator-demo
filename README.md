@@ -231,7 +231,7 @@ The first step is to add BannerView to your layout.
 </p>
 
 #### Inline Banner
-As the name implies, inline banners are shown generally between the content. Unlike a smart banner, an Inline banner has dynamic heights, meaning different ads of Inline can be of different heights. 
+As the name implies, inline banners are shown generally between the content. Unlike an anchored banner, an Inline banner has dynamic heights, meaning different ads of Inline can be of different heights. 
 
 This helps Inline to grow or shrink based on the ad content. It is also possible to set the max height of the Inline banner. However, it should be set upfront on the android manifest. 
 
