@@ -31,14 +31,14 @@ add metadata with name 'com.adpumb.config.key' values given by us.
 > AdPumb will automatically initialize as the application launches. You do not need to register/init manually.
 
 ## Type of ads supported by AdPumb
-[1.Interstial](#interstial) </br>
+[1.Interstitial](#interstitial) </br>
 [2.Reward](#reward) </br>
 [3.Native](#native) </br>
 [4.Banner](#banner)
 
 
 
-### Interstial
+### Interstitial
 Create Interstitial placement: AdPumb is designed on the concept of placement rather than ad unit. A placement is a predefined action sequence which ends up in showing an Ad. Consider the example of a calculator, where a user presses the addition (+) button and an ad is shown. Here, we can consider the addition button click as a placement.
 ```java
 private void onAdditionButtonClick() {
