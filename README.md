@@ -25,12 +25,12 @@ add metadata with name 'com.adpumb.config.key' values given by us.
 ```
    <meta-data 
    android:name="com.adpumb.config.key" 
-   android:value="adpumb,AIzaSyBdR63r0eiZi6_wvGNlToNnVfVCm7sffwk,1:476641212837:android:440c356d4a8598bcda904c" />
+   android:value="{api-key provided by adpumb}" />
     
 ```
 > AdPumb will automatically initialize as the application launches. You do not need to register/init manually.
 
-## Type of ads supported by Adpumb
+## Type of ads supported by AdPumb
 [1.Interstial](#interstial) </br>
 [2.Reward](#reward) </br>
 [3.Native](#native) </br>
