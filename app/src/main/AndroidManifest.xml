@@ -5,7 +5,7 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="Calculator"
+        android:label="AdPumb Demo Application"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
@@ -24,10 +24,20 @@
         <activity android:name=".ScrollActivity" />
         <meta-data
             android:name="com.adpumb.config.banner.types"
-            android:value="INLINE,ANCHORED" />
+            android:value="INLINEx120,INLINE,BANNER,ANCHORED" />
         <meta-data
             android:name="com.adpumb.config.key"
             android:value="adpumb-test,AIzaSyAx4dxazFButNiZU4_rXT8hgaJNSREfmrw,1:693299279464:android:07e16d50af2a5719e6addd" />
+
+        <meta-data
+            android:name="com.adpumb.config.banner.inline.maxHeight"
+            android:value="400" />
+        <meta-data
+            android:name="com.google.android.gms.ads.flag.OPTIMIZE_INITIALIZATION"
+            android:value="true" />
+        <meta-data
+            android:name="com.google.android.gms.ads.flag.OPTIMIZE_AD_LOADING"
+            android:value="true" />
 
     </application>
 
