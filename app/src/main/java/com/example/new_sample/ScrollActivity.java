@@ -19,7 +19,7 @@ import com.adpumb.ads.display.DisplayManager;
 import com.adpumb.ads.mediation.KempaMediationAdapter;
 import com.adpumb.ads.util.Utils;
 
-public class ScrollActivity extends AppCompatActivity implements BannerEvent {
+public class ScrollActivity extends AppCompatActivity  {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,9 +69,12 @@ public class ScrollActivity extends AppCompatActivity implements BannerEvent {
                 .build();
         DisplayManager.getInstance().showBannerAd(staticPlacement,findViewById(R.id.bottomBanner));
         DisplayManager.getInstance().showBannerAd(bannerOne,container1);
-        DisplayManager.getInstance().showBannerAd(bannerTwo, container2, this);
+        DisplayManager.getInstance().showBannerAd(bannerTwo, container2, new BannerListener());
         DisplayManager.getInstance().showBannerAd(bannerThree,container3);
     }
+}
+
+class BannerListener extends BannerEvent{
 
     @Override
     public void onImpressionLogged(BannerPlacement placement) {
