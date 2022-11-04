@@ -15,7 +15,7 @@ repositories {
     }
 }
 dependencies {
-    implementation 'com.adpumb:bidmachine:2.2.5' 
+    implementation 'com.adpumb:bidmachine:2.2.6' 
     *********************
 
 ```
