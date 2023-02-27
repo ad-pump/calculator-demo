@@ -32,9 +32,10 @@ add metadata with name 'com.adpumb.config.key' values given by us.
 
 ## Type of ads supported by AdPumb
 [1.Interstitial](#interstitial) </br>
-[2.Rewarded](#reward) </br>
-[3.Native](#native) </br>
-[4.Banner](#banner)
+[2.App-Open Interstitial](#app_open) </br>
+[3.Rewarded](#reward) </br>
+[4.Native](#native) </br>
+[5.Banner](#banner)
 
 
 
@@ -116,9 +117,9 @@ AppOpenInterstitialPlacement appOpenInterstitialPlacement = new AppOpenInterstit
                     @Override
                     public void onAdCompletion(boolean isSuccess, PlacementDisplayStatus status) {
                         if (success){
-                            Toast.makeText(mActivity, "You have successfully watched Rewarded Ad", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mActivity, "You have successfully watched App Open Ad", Toast.LENGTH_SHORT).show();
                         }else {
-                            Toast.makeText(mActivity, "please watch Rewarded Ad - "+placementDisplayStatus.name(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mActivity, "please watch App Open Ad - "+placementDisplayStatus.name(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 }));)
