@@ -32,7 +32,7 @@ add metadata with name 'com.adpumb.config.key' values given by us.
 
 ## Type of ads supported by AdPumb
 [1.Interstitial](#interstitial) </br>
-[2.App-Open Interstitial](#app_open) </br>
+[2.App-Open Interstitial](#app_open_interstital) </br>
 [3.Rewarded](#reward) </br>
 [4.Native](#native) </br>
 [5.Banner](#banner)
@@ -106,7 +106,7 @@ Customizing loader animation: You can customize the loader using the loader sett
   <img src="https://github.com/ad-pump/calculator-demo/blob/nlshad-patch-2/Interstial-ad-demo.png">
 </p>
 
-### App-Open Interstitial
+### App Open Interstitial
 App-Open Interstitial Placement Implementation:
 ```java
 AppOpenInterstitialPlacement appOpenInterstitialPlacement = new AppOpenInterstitialPlacementBuilder()
