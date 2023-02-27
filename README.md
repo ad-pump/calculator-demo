@@ -32,8 +32,8 @@ add metadata with name 'com.adpumb.config.key' values given by us.
 
 ## Type of ads supported by AdPumb
 [1.Interstitial](#interstitial) </br>
-[2.App-Open Interstitial](#app_open_interstital) </br>
-[3.Rewarded](#reward) </br>
+[2.App-Open Interstitial](#app-open-interstital) </br>
+[3.Rewarded](#rewarded) </br>
 [4.Native](#native) </br>
 [5.Banner](#banner)
 
