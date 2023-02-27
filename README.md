@@ -105,6 +105,29 @@ Customizing loader animation: You can customize the loader using the loader sett
   <img src="https://github.com/ad-pump/calculator-demo/blob/nlshad-patch-2/Interstial-ad-demo.png">
 </p>
 
+### App-Open Interstitial
+App-Open Interstitial Placement Implementation:
+```java
+AppOpenInterstitialPlacement appOpenInterstitialPlacement = new AppOpenInterstitialPlacementBuilder()
+                .name("placementName") //Name of the placement is very important. Revenue dashboard will track the placement based on the name given.
+                .showLoaderTillAdIsReady(false)
+                .frequencyCapInSeconds(15)
+                .onAdCompletion(new AdCompletion() {
+                    @Override
+                    public void onAdCompletion(boolean isSuccess, PlacementDisplayStatus status) {
+                        if (success){
+                            Toast.makeText(mActivity, "You have successfully watched Rewarded Ad", Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(mActivity, "please watch Rewarded Ad - "+placementDisplayStatus.name(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }));)
+                .placementGroup("placementGroup")
+                .build();
+
+        DisplayManager.getInstance().showAd(appOpenInterstitialPlacement);            
+```
+
 ### Rewarded
 Rewarded Placement Implementation:
 ```java
